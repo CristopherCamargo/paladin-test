@@ -11,7 +11,7 @@ class App extends Component {
   render() {
     return (
       <div className="outer-container">
-        <Grid container spacing={12}>
+        <Grid container spacing={0}>
           <Grid item xs={2}>
             <Menu pageWrapId={ "main" } outerContainerId={ "outer-container" } noOverlay>
               <MenuList />
