@@ -10,6 +10,7 @@ import ExpandMore from 'material-ui-icons/ExpandMore';
 import { MenuItem } from 'material-ui/Menu';
 import Downshift from 'downshift';
 import lodash from 'lodash';
+import { browserHistory } from 'react-router';
 
 class MenuList extends Component {
   constructor(props) {
@@ -59,6 +60,10 @@ class MenuList extends Component {
     this.setState({
       openCategories: openCategories
     });
+  }
+
+  changeUrl( url ) {
+    browserHistory.push( url );
   }
 
   render() {
@@ -125,7 +130,7 @@ class MenuList extends Component {
 
             return (
               <div>
-                <ListItem button style={{ 'paddingLeft': paddingText }}>
+                <ListItem button style={{ 'paddingLeft': paddingText }} onClick={ () => this.changeUrl( '/products/'+sublevel.id ) }>
                   <ListItemText primary={sublevel.name} />
                 </ListItem>
                 {sublevel.sublevels ?
@@ -148,7 +153,7 @@ class MenuList extends Component {
       <div>
         <List>
           <ListItem button>
-            <ListItemText primary="Home" />
+            <ListItemText primary="Home" onClick={() => this.changeUrl( '/' )}/>
           </ListItem>
           <ListItem button>
             <ListItemText primary="Cart" />
