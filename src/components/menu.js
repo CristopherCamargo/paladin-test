@@ -6,7 +6,8 @@ import { connect } from 'react-redux';
 import Collapse from 'material-ui/transitions/Collapse';
 import ExpandLess from 'material-ui-icons/ExpandLess';
 import ExpandMore from 'material-ui-icons/ExpandMore';
-import TextField from 'material-ui/TextField';
+import { MenuItem } from 'material-ui/Menu';
+import Downshift from 'downshift';
 
 class MenuList extends Component {
   constructor(props) {
@@ -57,6 +58,52 @@ class MenuList extends Component {
 
   render() {
 
+    const Autocomplete = ({items, onChange, padding}) => {
+      return (
+        <Downshift
+          onChange={onChange}
+          render={({
+            getInputProps,
+            getItemProps,
+            isOpen,
+            inputValue,
+            selectedItem,
+            highlightedIndex,
+          }) => (
+            <div>
+              <input {...getInputProps({placeholder: 'Buscar producto'})} style={{'marginLeft': padding, 'padding': '8px'}}/>
+              {isOpen ? (
+                <div style={{border: '1px solid #ccc', 'marginLeft': padding}}>
+                  {items
+                    .filter(
+                      i =>
+                        !inputValue ||
+                        i.toLowerCase().includes(inputValue.toLowerCase()),
+                    )
+                    .map((item, index) => (
+                      <div
+                        {...getItemProps({item})}
+                        key={item}
+                        style={{
+                          backgroundColor:
+                            highlightedIndex === index ? '#fafafff2' : 'white',
+                          fontWeight: selectedItem === item ? 'bold' : 'normal',
+                          color: '#000',
+                          fontSize: '0.8em',
+                          padding: '5px'
+                        }}
+                      >
+                        {item}
+                      </div>
+                    ))}
+                </div>
+              ) : null}
+            </div>
+          )}
+        />
+      )
+    }
+
     const Menu = ({ data, level, id }) => {
 
       level = level + 1;
@@ -75,7 +122,11 @@ class MenuList extends Component {
                 {sublevel.sublevels ?
                   ( <Menu data={sublevel.sublevels} level={level}/> )
                   :
-                  ( <div>  </div> )
+                  ( <Autocomplete
+                      items = {['apple', 'orange', 'carrot']}
+                      onChange = {selectedItem => console.log(selectedItem)}
+                      padding = {paddingText}
+                      /> )
                 }
               </div>
             );

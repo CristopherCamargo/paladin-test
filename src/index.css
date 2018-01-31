@@ -40,9 +40,10 @@ h1 {
   background: #6a80ff;
   padding: 2.5em 1.5em 0;
   font-size: 1.15em;
-  overflow: hidden !important;
 }
-
+.bm-menu-wrap ::-webkit-scrollbar {
+    display: none;
+}
 /* Morph shape necessary with bubble or elastic */
 .bm-morph-shape {
   fill: #6a80ff;
