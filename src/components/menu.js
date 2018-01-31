@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import { getCategories } from '../actions/categories';
+import { getProducts } from '../actions/products';
 import { connect } from 'react-redux';
 import Collapse from 'material-ui/transitions/Collapse';
 import ExpandLess from 'material-ui-icons/ExpandLess';
 import ExpandMore from 'material-ui-icons/ExpandMore';
 import { MenuItem } from 'material-ui/Menu';
 import Downshift from 'downshift';
+import lodash from 'lodash';
 
 class MenuList extends Component {
   constructor(props) {
@@ -15,14 +17,15 @@ class MenuList extends Component {
     this.state = {
       isLoad: false,
       categories: [],
-      openCategories: []
+      openCategories: [],
+      products: []
     };
     this.handleClick = this.handleClick.bind(this);
   }
 
   componentWillReceiveProps( nextProps ) {
-    if (!this.state.isLoad) {
-      if (nextProps.categories.length > 0) {
+    if ( !this.state.isLoad ) {
+      if ( nextProps.categories.length > 0 && nextProps.products.length > 0) {
 
         for (let i = 0; i < nextProps.categories.length; i++) {
           const openCategories = this.state.openCategories;
@@ -34,7 +37,8 @@ class MenuList extends Component {
 
         this.setState({
           isLoad: true,
-          categories: nextProps.categories
+          categories: nextProps.categories,
+          products: nextProps.products
         });
       }
     }
@@ -42,6 +46,7 @@ class MenuList extends Component {
 
   componentDidMount() {
     this.props.getCategories();
+    this.props.getProducts();
   }
 
   handleClick(index) {
@@ -90,7 +95,8 @@ class MenuList extends Component {
                           fontWeight: selectedItem === item ? 'bold' : 'normal',
                           color: '#000',
                           fontSize: '0.8em',
-                          padding: '5px'
+                          padding: '5px',
+                          cursor: 'pointer'
                         }}
                       >
                         {item}
@@ -114,18 +120,21 @@ class MenuList extends Component {
       return (
         <div>
         {data.map(sublevel => {
+            let products = [];
+            products = lodash.map(lodash.filter(this.state.products, function(product) { return product.sublevel_id == sublevel.id; } ), 'name');
+
             return (
               <div>
-                <ListItem button style={{'paddingLeft': paddingText}}>
+                <ListItem button style={{ 'paddingLeft': paddingText }}>
                   <ListItemText primary={sublevel.name} />
                 </ListItem>
                 {sublevel.sublevels ?
-                  ( <Menu data={sublevel.sublevels} level={level}/> )
+                  ( <Menu data={ sublevel.sublevels } level={ level } id={ sublevel.id }/> )
                   :
                   ( <Autocomplete
-                      items = {['apple', 'orange', 'carrot']}
-                      onChange = {selectedItem => console.log(selectedItem)}
-                      padding = {paddingText}
+                      items = { products }
+                      onChange = { selectedItem => console.log(selectedItem) }
+                      padding = { paddingText }
                       /> )
                 }
               </div>
@@ -154,7 +163,7 @@ class MenuList extends Component {
                   {this.state.openCategories[index] ? <ExpandLess /> : <ExpandMore />}
                 </ListItem>
                 <Collapse in={ this.state.openCategories[index] } timeout="auto" unmountOnExit>
-                  <Menu data={ row.sublevels } level={ 1 } index={ row.id }/>
+                  <Menu data={ row.sublevels } level={ 1 } id={ index }/>
                 </Collapse>
               </div>
             );
@@ -168,7 +177,8 @@ class MenuList extends Component {
 function mapStateToProps( state ) {
   return {
     categories: state.categoriesReducer,
+    products: state.productsReducer,
   }
 }
 
-export default connect(mapStateToProps,{ getCategories }) (MenuList);
+export default connect(mapStateToProps,{ getCategories, getProducts }) (MenuList);
