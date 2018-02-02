@@ -8,7 +8,8 @@ const initialState = {
     price: { min: 100, max: 10000 },
     quantity: { min: 100, max: 800 },
     applyfilter: false,
-  }
+  },
+  cart: [],
 };
 
 export default initialState;

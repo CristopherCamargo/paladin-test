@@ -7,6 +7,7 @@ import IconButton from 'material-ui/IconButton';
 import AddShoppingCartIcon from 'material-ui-icons/AddShoppingCart';
 import Input, { InputLabel } from 'material-ui/Input';
 import OrderNavigation from './order-navigation';
+import { pushToCart } from '../actions/cart';
 
 class Products extends Component {
   constructor( props ) {
@@ -27,6 +28,7 @@ class Products extends Component {
     };
 
     this.handleNumberInputChange = this.handleNumberInputChange.bind(this);
+    this.pushToCart = this.pushToCart.bind(this);
   }
 
   componentWillReceiveProps( nextProps ) {
@@ -94,6 +96,10 @@ class Products extends Component {
     })
   }
 
+  pushToCart( product ) {
+    this.props.pushToCart( product );
+  }
+
   render() {
     const RenderProduct = ({ product }) => {
       return (
@@ -131,7 +137,7 @@ class Products extends Component {
                     />
                   </th>
                   <th>
-                    <IconButton color="primary" aria-label="Add to shopping cart" disabled={product.available ? false : true}>
+                    <IconButton color="primary" aria-label="Add to shopping cart" disabled={product.available ? false : true} onClick={() => this.pushToCart( product )}>
                       <AddShoppingCartIcon />
                     </IconButton>
                   </th>
@@ -170,4 +176,4 @@ function mapStateToProps( state ) {
   }
 }
 
-export default connect(mapStateToProps, { })(Products);
+export default connect(mapStateToProps, { pushToCart })(Products);

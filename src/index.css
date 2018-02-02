@@ -80,6 +80,11 @@ h4 {
   text-align: left;
   margin: auto;
 }
+.table-product-cart {
+  border: 1px solid #4257b5;
+  padding: 10px;
+  text-align: right;
+}
 .input-range {
   width: 60%;
   margin: 20px;
