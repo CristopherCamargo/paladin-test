@@ -1,4 +1,5 @@
 import * as types from './types';
+import { changeSnack } from './actions';
 
 function pushCart( product ) {
   return {
@@ -43,8 +44,10 @@ export function pushToCart( product ) {
     }
 
     if ( isUpdate ) {
+      dispatch( changeSnack( 'Producto actualizado satisfactoriamente' ) );
       dispatch( updateData( currentCart ) );
     } else {
+      dispatch( changeSnack( 'Productos agregado satisfactoriamente' ) );
       dispatch( pushCart( product ) );
     }
   };
@@ -65,12 +68,14 @@ export function getCart() {
 export function clearCart() {
   window.localStorage.removeItem("cart");
   return ( dispatch, getState ) => {
+    dispatch( changeSnack( 'Se ha limpiado satisfactoriamente' ) );
     dispatch( clearData() );
   }
 }
 
 export function updateCart( cart ) {
   return ( dispatch, getState ) => {
+    dispatch( changeSnack( 'Productos actualizados satisfactoriamente' ) );
     dispatch( updateData( cart ) );
   };
 }

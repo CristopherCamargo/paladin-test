@@ -10,6 +10,7 @@ const initialState = {
     applyfilter: false,
   },
   cart: [],
+  snackMessage: '',
 };
 
 export default initialState;

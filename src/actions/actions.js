@@ -25,6 +25,19 @@ function clearFilters() {
   };
 }
 
+function snackMessage( message ) {
+  return {
+    type : types.SNACK_MESSAGE,
+    payload: message
+  }
+}
+
+function snackClear() {
+  return {
+    type : types.SNACK_CLEAR,
+  }
+}
+
 export function changeOrderBy( order ) {
   return ( dispatch, getState ) => {
     dispatch( orderBy( order ) );
@@ -41,4 +54,16 @@ export function clearFilterBy() {
   return ( dispatch, getState ) => {
     dispatch( clearFilters() );
   };
+}
+
+export function changeSnack( message ) {
+  return ( dispatch, getState ) => {
+    dispatch( snackMessage( message ) );
+  }
+}
+
+export function clearSnack() {
+  return ( dispatch, getState ) => {
+    dispatch( snackClear() );
+  }
 }
