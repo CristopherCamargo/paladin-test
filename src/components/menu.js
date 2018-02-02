@@ -66,6 +66,17 @@ class MenuList extends Component {
     browserHistory.push( url );
   }
 
+  searchProduct( selected, products, sublevelId ) {
+    let id = 0;
+    for (let i = 0; i < products.length; i++) {
+      if (selected == products[i].name) {
+        id = products[i].id;
+        break;
+      }
+    }
+    this.changeUrl( '/products/'+sublevelId+'/'+id );
+  }
+
   render() {
 
     const Autocomplete = ({items, onChange, padding}) => {
@@ -127,6 +138,7 @@ class MenuList extends Component {
         {data.map(sublevel => {
             let products = [];
             products = lodash.map(lodash.filter(this.state.products, function(product) { return product.sublevel_id == sublevel.id; } ), 'name');
+            const productsData = lodash.filter(this.state.products, function(product) { return product.sublevel_id == sublevel.id; });
 
             return (
               <div>
@@ -138,7 +150,7 @@ class MenuList extends Component {
                   :
                   ( <Autocomplete
                       items = { products }
-                      onChange = { selectedItem => console.log(selectedItem) }
+                      onChange = { selectedItem => this.searchProduct( selectedItem, productsData, sublevel.id ) }
                       padding = { paddingText }
                       /> )
                 }

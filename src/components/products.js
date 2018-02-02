@@ -41,6 +41,11 @@ class Products extends Component {
         products[i].quantity_to_cart = 1;
       }
 
+      if ( nextProps.params.product !== 0 && nextProps.params.product !== undefined ) {
+        // get only product
+        products = lodash.filter( products, { 'id': nextProps.params.product });
+      }
+
       if ( nextProps.filterBy.applyfilters ) {
         // apply filters
         products = lodash.filter( products, { 'available': nextProps.filterBy.available } );

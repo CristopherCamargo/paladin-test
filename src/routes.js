@@ -7,6 +7,6 @@ import Products from './components/products';
 export default (
   <Route path="/" component={ App }>
     <IndexRoute component={ Home }/>
-    <Route path="/products/:sublevel" component={ Products }/>
+    <Route path="/products/:sublevel(/:product)" component={ Products }/>
   </Route>
 );
