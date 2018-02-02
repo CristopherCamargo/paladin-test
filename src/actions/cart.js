@@ -1,5 +1,4 @@
 import * as types from './types';
-import categories from '../data/categories';
 
 function pushCart( product ) {
   return {

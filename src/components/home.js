@@ -9,7 +9,7 @@ class Home extends Component {
           <h1>El Baratón</h1>
         </Grid>
         <Grid item xs={12}>
-          <img className="home-image" src="/images/vino_0.jpg"></img>
+          <img className="home-image" src="/images/vino_0.jpg" alt="el baraton"/>
         </Grid>
       </Grid>
     );

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
+import List, { ListItem, ListItemText } from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import { getCategories } from '../actions/categories';
 import { getProducts } from '../actions/products';
@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 import Collapse from 'material-ui/transitions/Collapse';
 import ExpandLess from 'material-ui-icons/ExpandLess';
 import ExpandMore from 'material-ui-icons/ExpandMore';
-import { MenuItem } from 'material-ui/Menu';
 import Downshift from 'downshift';
 import lodash from 'lodash';
 import { browserHistory } from 'react-router';
@@ -26,7 +25,7 @@ class MenuList extends Component {
   }
 
   componentWillReceiveProps( nextProps ) {
-    console.log(nextProps);
+
     if ( !this.state.isLoad ) {
       if ( nextProps.categories.length > 0 && nextProps.products.length > 0) {
 
@@ -72,7 +71,7 @@ class MenuList extends Component {
   searchProduct( selected, products, sublevelId ) {
     let id = 0;
     for (let i = 0; i < products.length; i++) {
-      if (selected == products[i].name) {
+      if (selected === products[i].name) {
         id = products[i].id;
         break;
       }
@@ -134,7 +133,6 @@ class MenuList extends Component {
       level = level + 1;
       const padding = 16 * level;
       const paddingText = padding+'px';
-      const openSublevels = this.state.openCategories;
 
       return (
         <div>
@@ -144,7 +142,7 @@ class MenuList extends Component {
             const productsData = lodash.filter(this.state.products, function(product) { return product.sublevel_id == sublevel.id; });
 
             return (
-              <div>
+              <div key={sublevel.id}>
                 <ListItem button style={{ 'paddingLeft': paddingText }} onClick={ () => this.changeUrl( '/products/'+sublevel.id ) }>
                   <ListItemText primary={sublevel.name} />
                 </ListItem>
@@ -177,8 +175,8 @@ class MenuList extends Component {
         <Divider />
         { this.state.categories.map( (row, index ) => {
             return (
-              <div>
-                <ListItem button onClick={() => this.handleClick(index)}>
+              <div key={index}>
+                <ListItem button onClick={() => this.handleClick(index)} >
                   <ListItemText primary={ row.name } />
                   {this.state.openCategories[index] ? <ExpandLess /> : <ExpandMore />}
                 </ListItem>

@@ -5,7 +5,7 @@ import Paper from 'material-ui/Paper';
 import lodash from 'lodash';
 import IconButton from 'material-ui/IconButton';
 import AddShoppingCartIcon from 'material-ui-icons/AddShoppingCart';
-import Input, { InputLabel } from 'material-ui/Input';
+import Input from 'material-ui/Input';
 import OrderNavigation from './order-navigation';
 import { pushToCart } from '../actions/cart';
 
@@ -39,7 +39,7 @@ class Products extends Component {
       products = lodash.filter( nextProps.products, function( product ) { return product.sublevel_id == sublevel });
 
       for (let i = 0; i < products.length; i++) {
-        products[i].real_price = Number(products[i].price.replace(/[^0-9\.-]+/g,""));
+        products[i].real_price = Number(products[i].price.replace(/[^0-9.-]+/g,""));
         products[i].quantity_to_cart = 1;
       }
 
@@ -161,7 +161,7 @@ class Products extends Component {
         </Grid>
         { this.state.products.map( ( row, index ) => {
           return (
-            <RenderProduct product={ row } />
+            <RenderProduct product={ row } key={index}/>
           );
         })}
       </Grid>

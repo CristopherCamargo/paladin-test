@@ -48,7 +48,7 @@ class OrderNavigation extends Component {
         <BottomNavigation
           value={this.state.selection}
           onChange={this.handleChange}
-          showLabels
+          showLabels={true}
         >
           <BottomNavigationAction label="Ordenar por precio" icon={<AttachMoney />}/>
           <BottomNavigationAction label="Ordenar por disponibilidad" icon={<Storage />}/>

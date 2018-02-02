@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Grid from 'material-ui/Grid';
 import { connect } from 'react-redux';
-import Paper from 'material-ui/Paper';
 import Input from 'material-ui/Input';
 import IconButton from 'material-ui/IconButton';
 import DeleteIcon from 'material-ui-icons/Delete';
@@ -64,7 +63,7 @@ class Cart extends Component {
     this.setState({
       cart: cart
     });
-    this.props.updateCart( cart );
+    this.props.updateCart( cart, removes );
   }
 
   render() {
@@ -111,13 +110,13 @@ class Cart extends Component {
     }
 
     return (
-      <Grid container spacing={24}>
+      <Grid container spacing={24} className="cart">
         <Grid item xs={12}>
           <h2>Cart</h2>
         </Grid>
         {this.state.cart.map( ( row, index ) => {
           return (
-            <Product product={ row }/>
+            <Product product={ row } key={index}/>
           );
         })}
         <Grid item xs={12}>

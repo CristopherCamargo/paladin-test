@@ -19,6 +19,10 @@ h4 {
 #main {
   padding-top: 50px;
   padding-bottom: 50px;
+  height: 100vh;
+}
+#outer-container{
+  height: 100%;
 }
 /* Position and sizing of burger button */
 .bm-burger-button {

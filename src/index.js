@@ -6,7 +6,6 @@ import thunk from 'redux-thunk';
 import { Router, browserHistory } from 'react-router';
 import routes from './routes';
 import './index.css';
-import App from './app';
 import registerServiceWorker from './registerServiceWorker';
 import rootReducer from './reducers/root';
 
