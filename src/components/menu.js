@@ -11,6 +11,7 @@ import { MenuItem } from 'material-ui/Menu';
 import Downshift from 'downshift';
 import lodash from 'lodash';
 import { browserHistory } from 'react-router';
+import { getCart } from '../actions/cart';
 
 class MenuList extends Component {
   constructor(props) {
@@ -25,6 +26,7 @@ class MenuList extends Component {
   }
 
   componentWillReceiveProps( nextProps ) {
+    console.log(nextProps);
     if ( !this.state.isLoad ) {
       if ( nextProps.categories.length > 0 && nextProps.products.length > 0) {
 
@@ -48,6 +50,7 @@ class MenuList extends Component {
   componentDidMount() {
     this.props.getCategories();
     this.props.getProducts();
+    this.props.getCart();
   }
 
   handleClick(index) {
@@ -198,4 +201,4 @@ function mapStateToProps( state ) {
   }
 }
 
-export default connect(mapStateToProps,{ getCategories, getProducts }) (MenuList);
+export default connect(mapStateToProps,{ getCategories, getProducts, getCart }) (MenuList);
