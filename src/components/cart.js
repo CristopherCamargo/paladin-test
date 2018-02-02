@@ -34,11 +34,11 @@ class Cart extends Component {
     }
   }
 
-  clearCart() {
+  clearCart( isBuy ) {
     this.setState({
       cart: []
     })
-    this.props.clearCart();
+    this.props.clearCart( isBuy );
   }
 
   updateQuantity = product => ( event ) => {
@@ -128,9 +128,16 @@ class Cart extends Component {
           ) :
           (
             <Grid item xs={12}>
-              <Button color="secondary" style={{ 'width': '100%' }} onClick={ this.clearCart }>
-                Limpiar carrito
-              </Button>
+              <Grid item xs={12}>
+                <Button color="primary" style={{ 'width': '100%' }} onClick={ () => this.clearCart(true) }>
+                  Comprar
+                </Button>
+              </Grid>
+              <Grid item xs={12}>
+                <Button color="secondary" style={{ 'width': '100%' }} onClick={ () => this.clearCart(false) }>
+                  Limpiar carrito
+                </Button>
+              </Grid>
             </Grid>
           )
         }

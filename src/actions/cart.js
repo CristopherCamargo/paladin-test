@@ -65,10 +65,14 @@ export function getCart() {
   };
 }
 
-export function clearCart() {
+export function clearCart( isBuy ) {
   window.localStorage.removeItem("cart");
   return ( dispatch, getState ) => {
-    dispatch( changeSnack( 'Se ha limpiado satisfactoriamente' ) );
+    if ( isBuy ) {
+      dispatch( changeSnack( 'Compra realizada' ) );
+    } else {
+      dispatch( changeSnack( 'Se ha limpiado satisfactoriamente' ) );
+    }
     dispatch( clearData() );
   }
 }
