@@ -7,7 +7,6 @@ import IconButton from 'material-ui/IconButton';
 import AddShoppingCartIcon from 'material-ui-icons/AddShoppingCart';
 import Input, { InputLabel } from 'material-ui/Input';
 import OrderNavigation from './order-navigation';
-import { changeOrderBy } from '../actions/actions';
 
 class Products extends Component {
   constructor( props ) {
@@ -37,10 +36,19 @@ class Products extends Component {
       const sublevel = nextProps.params.sublevel;
       products = lodash.filter( nextProps.products, function( product ) { return product.sublevel_id == sublevel });
 
-
       for (let i = 0; i < products.length; i++) {
         products[i].real_price = Number(products[i].price.replace(/[^0-9\.-]+/g,""));
         products[i].quantity_to_cart = 1;
+      }
+
+      if ( nextProps.filterBy.applyfilters ) {
+        // apply filters
+        products = lodash.filter( products, { 'available': nextProps.filterBy.available } );
+
+        products = lodash.filter( products, function( product ) { return product.quantity > nextProps.filterBy.quantity.min } );
+        products = lodash.filter( products, function( product ) { return product.quantity < nextProps.filterBy.quantity.max } );
+        products = lodash.filter( products, function( product ) { return product.real_price > nextProps.filterBy.price.min } );
+        products = lodash.filter( products, function( product ) { return product.real_price < nextProps.filterBy.price.max } );
       }
 
       if ( nextProps.orderBy > -1 ) {
@@ -136,7 +144,7 @@ class Products extends Component {
           <h2>Products</h2>
         </Grid>
         <Grid item xs={12}>
-          <Grid item xs={6}>
+          <Grid item xs>
             <OrderNavigation />
           </Grid>
         </Grid>
@@ -152,8 +160,9 @@ class Products extends Component {
 function mapStateToProps( state ) {
   return {
     products: state.productsReducer,
-    orderBy: state.orderByReducer
+    orderBy: state.orderByReducer,
+    filterBy: state.filterByReducer
   }
 }
 
-export default connect(mapStateToProps, { changeOrderBy })(Products);
+export default connect(mapStateToProps, { })(Products);
