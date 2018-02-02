@@ -166,10 +166,10 @@ class MenuList extends Component {
       <div>
         <List>
           <ListItem button>
-            <ListItemText primary="Home" onClick={() => this.changeUrl( '/' )}/>
+            <ListItemText primary="Inicio" onClick={() => this.changeUrl( '/' )}/>
           </ListItem>
           <ListItem button>
-            <ListItemText primary="Cart" onClick={() => this.changeUrl( '/cart' )}/>
+            <ListItemText primary="Carrito" onClick={() => this.changeUrl( '/cart' )}/>
           </ListItem>
         </List>
         <Divider />

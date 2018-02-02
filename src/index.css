@@ -101,6 +101,9 @@ h4 {
 .paper-collapse b {
   text-align: center;
 }
+.empty-message {
+  text-align: center;
+}
 /* Responsive */
 @media (max-width: 700px) {
   h1 {

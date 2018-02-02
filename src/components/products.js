@@ -8,6 +8,7 @@ import AddShoppingCartIcon from 'material-ui-icons/AddShoppingCart';
 import Input from 'material-ui/Input';
 import OrderNavigation from './order-navigation';
 import { pushToCart } from '../actions/cart';
+import Chip from 'material-ui/Chip';
 
 class Products extends Component {
   constructor( props ) {
@@ -164,6 +165,17 @@ class Products extends Component {
             <RenderProduct product={ row } key={index}/>
           );
         })}
+        {this.state.products.length < 1 ?
+          (
+            <Grid item xs={12} className="empty-message">
+              <Chip label="No hay Productos" />
+            </Grid>
+          ) :
+          (
+            <Grid item xs={12}>
+            </Grid>
+          )
+        }
       </Grid>
     );
   }

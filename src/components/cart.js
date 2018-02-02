@@ -7,6 +7,7 @@ import DeleteIcon from 'material-ui-icons/Delete';
 import Button from 'material-ui/Button';
 import { clearCart, updateCart } from '../actions/cart';
 import lodash from 'lodash';
+import Chip from 'material-ui/Chip';
 
 class Cart extends Component {
   constructor( props ) {
@@ -112,18 +113,27 @@ class Cart extends Component {
     return (
       <Grid container spacing={24} className="cart">
         <Grid item xs={12}>
-          <h2>Cart</h2>
+          <h2>Carrito de compras</h2>
         </Grid>
         {this.state.cart.map( ( row, index ) => {
           return (
             <Product product={ row } key={index}/>
           );
         })}
-        <Grid item xs={12}>
-          <Button color="secondary" style={{ 'width': '100%' }} onClick={ this.clearCart }>
-            Limpiar carrito
-          </Button>
-        </Grid>
+        {this.state.cart.length < 1 ?
+          (
+            <Grid item xs={12} className="empty-message">
+              <Chip label="Carrito vacio" />
+            </Grid>
+          ) :
+          (
+            <Grid item xs={12}>
+              <Button color="secondary" style={{ 'width': '100%' }} onClick={ this.clearCart }>
+                Limpiar carrito
+              </Button>
+            </Grid>
+          )
+        }
       </Grid>
     );
   }
